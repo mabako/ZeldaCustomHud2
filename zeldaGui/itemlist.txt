@@ -4,7 +4,7 @@
 
 //Name, {Icons Order},Loop,isBottle
 :Bow,{0,48,49,49},false,false;
-:Boomerang,{1},false,false;
+:Boomerang,{1,37},false,false;
 :Hookshot,{2},false,false;
 :Bombs,{3},false,false;
 :Mushroom,{4,56},false,false;
