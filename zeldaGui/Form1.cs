@@ -118,7 +118,7 @@ namespace zeldaGui
                             }
                             else
                             {
-                                g.DrawImage(iconSet[itemsArray[x, y].iconsId[itemsArray[x, y].level]], new Rectangle(x * 32, y * 32, 32, 32), 0, 0, 32, 32, GraphicsUnit.Pixel, ia);
+                                g.DrawImage(iconSet[itemsArray[x, y].iconsId[0]], new Rectangle(x * 32, y * 32, 32, 32), 0, 0, 32, 32, GraphicsUnit.Pixel, ia);
                             }
                         }
                         catch (Exception e)
@@ -575,216 +575,7 @@ namespace zeldaGui
                         fs.Read(buffer, 0, 255);
                         fs.Close();
 
-                        //0 - 14 bow to book of mudora
-                        //15 = bottle not used in my list
-                        //(16 - 23 somaria to moon pearl) -1 list
-                        for (int i = 0; i < 15; i++)
-                        {
-                            
-                            if (buffer[i] != 0)
-                            {
-                                if (i != 1)//bomerang
-                                {
-                                    if (buffer[i] == 1)
-                                    {
-                                        itemsList[i].on = true;
-                                    }
-                                }
-                                else if (i != 4) // Mushroom
-                                {
-                                    if (buffer[i] == 1)
-                                    {
-                                        itemsList[i].on = true;
-                                    }
-                                }
-                                else if (i != 12) // Shovel
-                                {
-                                    if (buffer[i] == 1)
-                                    {
-                                        itemsList[i].on = true;
-                                    }
-                                }
-                                else
-                                {
-                                    itemsList[i].on = true;
-                                }
-                                if (i != 3) // bombs
-                                {
-                                    if (i != 1)//bomerang
-                                    {
-                                        if (i != 4) // Mushroom
-                                        {
-                                            if (i != 12) // Shovel
-                                            {
-                                                itemsList[i].level = (byte)(buffer[i] - 1);
-                                                itemsList[i].on = true;
-                                            }
-                                            else
-                                            {
-                                                if (buffer[i] >= 2)//if it the shovel and buffer >= 2
-                                                {
-                                                    itemsList[42].on = true; //flute = on
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (buffer[i] == 2)//if it the mushroom and buffer == 2
-                                            {
-                                                itemsList[41].on = true; //powder = on
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (buffer[i] == 2)//if it the boomerang and buffer == 2
-                                        {
-                                            itemsList[40].on = true; //red boomerang = on
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    itemsList[i].on = true;
-                                }
-
-
-                            }
-                            else
-                            {
-                                itemsList[i].on = false;
-                                itemsList[i].level = 0;
-                                //itemsList[i].level = (byte)(buffer[i]-1);
-                            }
-                        }
-                        itemsList[51].on = true;
-                        if (buffer[43] == 0)
-                        {
-                            itemsList[51].level = 0;
-                        }
-                        if (buffer[43] == 1)
-                        {
-                            itemsList[51].level = 1;
-                        }
-                        if (buffer[43] == 2)
-                        {
-                            itemsList[51].level = 2;
-                        }
-                        if (buffer[43] == 3)
-                        {
-                            itemsList[51].level = 3;
-                        }
-
-                        for (int i = 16; i < 24; i++)
-                        {
-                            if (buffer[i] != 0)
-                            {
-                                itemsList[i - 1].on = true;
-                                itemsList[i - 1].level = (byte)(buffer[i] - 1);
-                            }
-                        }
-
-                        for (int i = 24; i < 32; i++)
-                        {
-                            if (i == 27)
-                            {
-                                itemsList[i - 2].on = true;
-                            }
-                            if (buffer[i] != 0)
-                            {
-                                itemsList[i - 2].on = true;
-                                if (i != 27)
-                                    itemsList[i - 2].level = (byte)(buffer[i] - 1);
-                                else
-                                {
-
-                                    itemsList[i - 2].level = (byte)(buffer[i]);
-                                }
-                            }
-                        }
-                        int adddoubles = 210;
-                        if (buffer[adddoubles] != 96)
-                        {
-                            if ((buffer[adddoubles] & 1) == 1)//flute working 42
-                            {
-                                itemsList[42].on = true;
-                            }
-
-                            if ((buffer[adddoubles] & 2) == 2)//flute fake 42
-                            {
-                                itemsList[42].on = true;
-                            }
-                            if ((buffer[adddoubles] & 4) == 4)//shovel 12
-                            {
-                                itemsList[12].on = true;
-                            }
-                            if ((buffer[adddoubles] & 16) == 16)//powder 41
-                            {
-                                itemsList[41].on = true;
-                            }
-                            if ((buffer[adddoubles] & 32) == 32)//mush 4
-                            {
-                                itemsList[4].on = true;
-                            }
-                            if ((buffer[adddoubles] & 64) == 64)//red boom 40
-                            {
-                                itemsList[40].on = true;
-                            }
-                            if ((buffer[adddoubles] & 128) == 128)//blue boom 1
-                            {
-                                itemsList[1].on = true;
-                            }
-                        }
-                        BitConverter.ToInt16(new byte[2] {0,1}, 0);
-                        if ((buffer[52] & 1) == 1) //hera
-                        {
-                            itemsList[32].on = true;
-                        }
-                        if ((buffer[52] & 2) == 2) //desert
-                        {
-                            itemsList[31].on = true;
-                        }
-                        if ((buffer[52] & 4) == 4) //eastern
-                        {
-                            itemsList[30].on = true;
-                        }
-                        if ((buffer[133]) == 3) //agahnim
-                        {
-                            itemsList[43].on = true;
-                        }
-
-                        
-                        if ((buffer[58] & 1) == 1)//mire
-                        {
-                            itemsList[33].on = true;
-                        }
-                        if ((buffer[58] & 2) == 2)//pod
-                        {
-                            itemsList[34].on = true;
-                        }
-                        if ((buffer[58] & 4) == 4)//ice
-                        {
-                            itemsList[35].on = true;
-                        }
-                        if ((buffer[58] & 8) == 8)//trock
-                        {
-                            itemsList[36].on = true;
-                        }
-                        if ((buffer[58] & 16) == 16)//swamp
-                        {
-                            itemsList[37].on = true;
-                        }
-                        if ((buffer[58] & 32) == 32)//tt
-                        {
-                            itemsList[38].on = true;
-                        }
-                        if ((buffer[58] & 64) == 64)//sw
-                        {
-                            itemsList[39].on = true;
-                        }
-
-
-                        drawIcons();
+                        Update(buffer);
                     }
                     catch (Exception e)
                     {
@@ -792,6 +583,89 @@ namespace zeldaGui
                     }
                 }
             }
+        }
+
+        public void Update(byte[] buffer)
+        {
+            // bow and arrows are set below
+            // 2 - 14 hookshot to book of mudora
+            for (int i = 2; i < 15; i++)
+            {
+                // Only the bombs have 'levels', i.e. how many bombs you actually have
+                itemsList[i].on = buffer[i] != 0;
+            }
+
+            // 15 selected bottle, not used here
+
+            // 16 - 23 somaria to moon pearl
+            for (int i = 16; i < 24; i++)
+            {
+                itemsList[i - 1].on = buffer[i] != 0;
+                itemsList[i - 1].level = (byte)(buffer[i] - 1);
+            }
+
+            // Isn't item 24 kinda... really really unused?
+            // 25: Sword
+            // 26: Shield
+            // 27: Armor
+            // 28, 29, 30, 31: "real" bottles, not just the selected one
+            for (int i = 25; i < 32; i++)
+            {
+                if (i == 27)
+                {
+                    // Link is never nude
+                    itemsList[i - 2].on = true;
+                    itemsList[i - 2].level = buffer[i];
+                }
+                else
+                {
+                    itemsList[i - 2].on = buffer[i] != 0;
+                    itemsList[i - 2].level = (byte)(buffer[i] - 1);
+                }
+            }
+
+            // Heart Piece (0-3 of 4)
+            // FIXME why is this 53?
+            itemsList[53].on = true;
+            itemsList[53].level = buffer[43];
+
+            // Randomizer allows to keep some items despite not normally having access to them
+            // This logic totally overwrites any stuff set before, i.e. whether you have the shovel/mushroom which disappear in normal gameplay
+            byte randomizer = buffer[210], randomizer2 = buffer[212];
+            itemsList[42].on = (randomizer & 3) > 0; // & 2 for fake flute, & 1 for working flute
+            itemsList[12].on = (randomizer & 4) == 4; // Shovel
+            itemsList[41].on = (randomizer & 0x10) == 0x10; // Magic Powder
+            itemsList[4].on = (randomizer & 0x20) == 0x20; // Mushroom
+
+            // Red OR Blue Boomerang
+            itemsList[1].on = (randomizer & 0xC0) > 0;
+            itemsList[1].level = (byte)((randomizer & 0x40) == 0x40 ? 1 : 0);
+
+            // Red boomerang
+            itemsList[40].on = (randomizer & 0x40) == 0x40;
+
+            // Bow
+            itemsList[0].on = (randomizer2 & 0xC0) > 0;
+            itemsList[0].level = (byte)((randomizer2 & 0x40) == 0x40 ? 2 : 1);
+
+            // Pendants
+            itemsList[32].on = (buffer[52] & 1) == 1;
+            itemsList[31].on = (buffer[52] & 2) == 2;
+            itemsList[30].on = (buffer[52] & 4) == 4;
+
+            // Did we murder Agahnim yet?
+            itemsList[50].on = (buffer[133]) == 3;
+
+            // Crystals
+            itemsList[33].on = (buffer[58] & 1) == 1;
+            itemsList[34].on = (buffer[58] & 2) == 2;
+            itemsList[35].on = (buffer[58] & 4) == 4;
+            itemsList[36].on = (buffer[58] & 8) == 8;
+            itemsList[37].on = (buffer[58] & 16) == 16;
+            itemsList[38].on = (buffer[58] & 32) == 32;
+            itemsList[39].on = (buffer[58] & 64) == 64;
+
+            drawIcons();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
